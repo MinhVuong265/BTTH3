@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -12,6 +12,7 @@ class TaskController extends Controller
      */
     public function index()
     {
+        //
         $tasks = Task::all();
         return view('tasks.index', compact('tasks'));
     }
@@ -21,7 +22,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        //
     }
 
     /**
@@ -29,54 +30,54 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-
-        Task::create($request->all());
-
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(string $id)
     {
-        return view('tasks.show', compact('task'));
+        //
+        $task = Task::find($id);
+        return view('tasks.show')->with('task', $task);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit(string $id)
     {
-        return view('tasks.edit', compact('task'));
+        //
+        $task = Task::find($id);
+        return view('tasks.edit')->with('task',$task);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, string $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+        $title = $request->input('title');
+        $description = $request->input('description');
+        $longDesc = $request->input('long_description');
+        $completed = $request->has('completed') ? 1 : 0;
 
-        $task->update($request->all());
-
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+        $task = Task::find($id);
+        $task->title = $title;
+        $task->description = $description;
+        $task->long_description = $longDesc;
+        $task->completed = $completed;
+        $task->save();
+        return  redirect()->route('tasks.index')->with('success', "Cập nhật trạng thái thành công");
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(string $id)
     {
-        $task->delete();
-
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+        //
     }
 }
