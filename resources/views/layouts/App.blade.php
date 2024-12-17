@@ -30,21 +30,22 @@
             </div>
         </div>
     </nav>
-
+    <div class="container mt-4">
     @if (session()->has('success'))
-    <div class="alert alert-success d-flex align-items-center" role="alert">
-        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:">
-            <use xlink:href="#check-circle-fill" />
-        </svg>
+    <div class="alert alert-success d-flex align-items-center" role="alert" style="height: 100px; justify-content:space-between">
         <div>
-            Cập nhật thành công
+           {{session('success')}} 
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @elseif (session()->has('delete'))
+    <div class="alert alert-danger d-flex align-items-center" role="alert" style="height: 100px; justify-content:space-between">
+        <div>
+            {{session('delete')}} 
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-
-
-    <div class="container mt-4">
         @yield('content')
     </div>
 

@@ -23,6 +23,7 @@ class TaskController extends Controller
     public function create()
     {
         //
+        return view('tasks.create');
     }
 
     /**
@@ -69,7 +70,7 @@ class TaskController extends Controller
         $task->long_description = $longDesc;
         $task->completed = $completed;
         $task->save();
-        return  redirect()->route('tasks.index')->with('success', "Cập nhật trạng thái thành công");
+        return redirect()->route('tasks.index')->with('success', "Cập nhật thành công");
         
     }
 
@@ -78,6 +79,8 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+        return redirect()->route('tasks.index')->with('delete', "Xóa thành công");
     }
 }
