@@ -45,6 +45,13 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    @elseif (session()->has('add'))
+    <div class="alert alert-primary d-flex align-items-center" role="alert" style="height: 100px; justify-content:space-between">
+        <div>
+            {{session('add')}} 
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
         @yield('content')
     </div>

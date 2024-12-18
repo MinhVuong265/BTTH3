@@ -9,6 +9,8 @@ class Task extends Model
     use HasFactory;
     private $id, $title, $description, $long_description, $completed, $create_at, $update_at;
 
+    protected $fillable = ['title', 'description', 'long_description', 'completed'];
+
     // public function __construct($id, $title, $des, $long_des, $completed, $create_at, $update_at)
     // {
     //     $this->id = $id;

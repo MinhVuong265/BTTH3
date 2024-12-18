@@ -31,7 +31,25 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'completed' => $request->has('completed') ? 1 : 0
+        ]);
+        
+        // Task::create($request->all());
+        $validate = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'long_description' => 'nullable|string|max:255',
+            'completed' => 'in:0,1'
+        ]);
+        
+        $task = Task::create([
+            'title' => $validate['title'],
+            'description' => $validate['description'],
+            'long_description' => $validate['long_description'],
+            'completed' => $validate['completed']
+        ]);
+        return redirect()->route('tasks.show', ['task' => $task->id])->with('add', 'Thêm thành công');
     }
 
     /**
